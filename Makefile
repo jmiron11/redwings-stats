@@ -1,14 +1,14 @@
 CXX = clang++
-CXXFLAGS = -std=c++1y -g -O0 -Wall -Wextra -Werror -pedantic 
-LDFLAGS = -std=c++1y -l sqlite3
+CXXFLAGS = -std=c++1y -stdlib=libc++ -g -O0 -Wall -Wextra -Werror -pedantic 
+LDFLAGS = -std=c++1y -stdlib=libc++ -lc++abi -l sqlite3
 
-OBJS = accessinfo.o
+OBJS = test.o
 
 redwings: $(OBJS)
 	$(CXX) $(LDFLAGS) $(OBJS) -o redwings
 
-accessinfo.o:
-	$(CXX) $(CXXFLAGS) -c accessinfo.cpp
+test.o:
+	$(CXX) $(CXXFLAGS) -c test.cpp
 
 
 clean:
