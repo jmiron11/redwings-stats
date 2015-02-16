@@ -57,7 +57,7 @@ for list_ in schedule_data:
 			else:
 				list_[4] = "NA"
 				list_[5] = "NONE"
- 
+
 #schedule_data holds the red wings schedule information to be placed in schedule table
 #team_game_data holds the red wings statistics per game to be placed in team_game table
 #player_data holds the red wings player statistics current season statistics
