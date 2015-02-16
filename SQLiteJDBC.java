@@ -41,8 +41,7 @@ public class SQLiteJDBC
 				if (num == -1 && (extraQual.equals("OT") || extraQual.equals("SO")))
 					num = 1;
 				
-				// ERROR: for some reason current points = 73, we are at 72.
-				// THIS IS DUE TO 1 LOSS BEING COUNTED AS AN EXTRA TIME. WHY?
+
 				results.add(num);
 			}
 			rs.close();
