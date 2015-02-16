@@ -11,7 +11,6 @@ def formatDate(unformatted):
 	date = date.strftime("%Y-%m-%d")
 	return date
 
-
 # get the soup for the website
 schedule_html = "http://redwings.nhl.com/club/schedule.htm"
 schedule_req = requests.get(schedule_html)

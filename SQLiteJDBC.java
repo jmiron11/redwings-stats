@@ -25,28 +25,25 @@ public class SQLiteJDBC
 				String result = rs.getString("result"); 					// result holds either 'A' or 'H' or 'NA' based on who has won
 				String homeTeam = rs.getString("home"); 					// home team holds the name of the home team
 				String extraQual = rs.getString("extra"); 					// extra holds whether or not the game went to SO or OT
-				if (extraQual.equals("OT") || extraQual.equals("SO"))
+				
+				int num = 0;
+				if (result.equals("H"))
 				{
-					results.add(1);
+					num = (homeTeam.equals("Red Wings")) ? 2 : -1; 		// stores a win for the red wings as a 2, OT/SO win as 1, loss as -1
 				}
-				else
+				else if (result.equals("A"))
 				{
-					if (result.equals("H"))
-					{
-						int num = (result.equals("Red Wings")) ? 2 : -1; 		// stores a win for the red wings as a 2, OT/SO win as 1, loss as -1
-						results.add(num);
-					}
-					else if (result.equals("A"))
-					{
-						int num =(result.equals("Red Wings")) ? -1 : 2; 		// stores a win for the red wings as a 2, OT/SO win as 1, loss as -1
-						results.add(num);
-					}
-					else
-					{
-						results.add(0); 							 			// stores a game not played yet as 0
-					}
+					num =(homeTeam.equals("Red Wings")) ? -1 : 2; 		// stores a win for the red wings as a 2, OT/SO win as 1, loss as -1
 				}
+				// if it is NA it skips the if - elseif statement
 
+				// if the red wings lost but it went to OT or SO
+				if (num == -1 && (extraQual.equals("OT") || extraQual.equals("SO")))
+					num = 1;
+				
+				// ERROR: for some reason current points = 73, we are at 72.
+				// THIS IS DUE TO 1 LOSS BEING COUNTED AS AN EXTRA TIME. WHY?
+				results.add(num);
 			}
 			rs.close();
 			cmd.close();
@@ -63,16 +60,25 @@ public class SQLiteJDBC
 
 	public static void main( String args[] )
 	{
-		ArrayList<Integer> results = new ArrayList<Integer>();
-		results = getResults();
+		ArrayList<Integer> results = new ArrayList<Integer>(getResults());
 		int points = 0;
+		int wins = 0;
+		int losses = 0;
+		int extra = 0;
 		for (int element : results)
+		{
 			if (element > 0)
-			{
 				points += element;
-			}
 
+			if (element == -1)
+				losses += 1;
+			else if (element == 2)
+				wins += 1;
+			else if (element == 1)
+				extra += 1;
+		}
 		System.out.println("Total games: " + results.size());
+		System.out.println("Current record: " + wins + "-" + losses + "-" + extra);
 		System.out.println("Current Points: " + points);
 	}
 }
