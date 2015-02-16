@@ -5,21 +5,21 @@ import java.util.*;
 public class SQLiteJDBC
 {
 
-	/*  */
+	/* returns an arrayList of the results of the redwings games. */
 	public static ArrayList<Integer> getResults()
 	{
 		ArrayList<Integer> results = new ArrayList<Integer>(); 				// set up results arraylist
 		Connection c = null;
 		Statement cmd = null;
+		ResultSet rs = null;
 		try
 		{
 			Class.forName("org.sqlite.JDBC"); 
-			c = DriverManager.getConnection("jdbc:sqlite:schedule.db");
+			c = DriverManager.getConnection("jdbc:sqlite:redwings.db"); 	// create the connection to the database
 			System.out.println("Opened database succesfully");
 
-			cmd = c.createStatement();
-			ResultSet rs = cmd.executeQuery("Select * from schedule; "); 	// sql command to iterate through schedule table
-
+			cmd = c.createStatement();							// create an db statement command
+			rs = cmd.executeQuery("Select * from schedule; "); 	// sql command to iterate through schedule table
 			while ( rs.next() )
 			{
 				String result = rs.getString("result"); 					// result holds either 'A' or 'H' or 'NA' based on who has won
@@ -53,6 +53,7 @@ public class SQLiteJDBC
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 			System.exit(0);
 		}
+
 		System.out.println("Operation done succesfully");
 		return results;
 	}

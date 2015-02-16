@@ -12,5 +12,8 @@ default: classes
 
 classes: $(CLASSES:.java=.class)
 
+webscrape:
+	python3.4 webscrape.py
+
 clean:
-	$(RM) *.class
+	$(RM) *.class *.db

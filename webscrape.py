@@ -14,24 +14,24 @@ def formatDate(unformatted):
 # get the soup for the website
 schedule_html = "http://redwings.nhl.com/club/schedule.htm"
 schedule_req = requests.get(schedule_html)
-schedule_data = schedule_req.text
-schedule_soup = BeautifulSoup(schedule_data)
+schedule_text = schedule_req.text
+schedule_soup = BeautifulSoup(schedule_text)
 
 # dates contains all of the days the detroit red wings play on
-data = []
+schedule_data = []
 
 # access the schedule table from the schedule_html above and get elements
-table_data = table = schedule_soup.find('table', class_='data', border='0', cellspacing='0', cellpadding='1')
+table = schedule_soup.find('table', class_='data', border='0', cellspacing='0', cellpadding='1')
 for row in table.find_all("tr"):
 	cells = row.find_all("td")
 	cells = [element.text.strip() for element in cells]
 	if len(cells) >= 5 and cells[0] != 'Date':
-		data.append([element for element in cells if element])
+		schedule_data.append([element for element in cells if element])
 
 # data now holds the table information
 # format data into proper lists for the below insert into database
 
-for list_ in data:
+for list_ in schedule_data:
 	while len(list_) < 6:
 		list_.append(None)
 	for index, ele in enumerate(list_): 
@@ -58,7 +58,11 @@ for list_ in data:
 				list_[4] = "NA"
 				list_[5] = "NONE"
 
-conn = sqlite3.connect('schedule.db')  					# close the database
+#schedule_data holds the red wings schedule information to be placed in schedule table
+#team_game_data holds the red wings statistics per game to be placed in team_game table
+#player_data holds the red wings player statistics current season statistics
+
+conn = sqlite3.connect('redwings.db')  					# close the database
 c = conn.cursor()
 
 #create a table command
@@ -70,9 +74,9 @@ c = conn.cursor()
 # extra will hold whether it went to extra time, "NONE" , "OT", "SO" for respective cases
 
 # if not (os.path.isfile("./schedule.db")):
-c.execute('''CREATE TABLE schedule(date TEXT, visitor TEXT, home TEXT, time TEXT, result TEXT, extra TEXT)''')
+c.execute('CREATE TABLE IF NOT EXISTS schedule(date TEXT, visitor TEXT, home TEXT, time TEXT, result TEXT, extra TEXT)')
 	#add information to the schedule database
-for list_ in data:
+for list_ in schedule_data:
 	c.execute('INSERT INTO schedule VALUES (?,?,?,?,?,?)', list_)
 
 	## add interface for replacing information and updating database whenever script is run.
