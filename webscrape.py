@@ -57,7 +57,7 @@ for list_ in schedule_data:
 			else:
 				list_[4] = "NA"
 				list_[5] = "NONE"
-
+ 
 #schedule_data holds the red wings schedule information to be placed in schedule table
 #team_game_data holds the red wings statistics per game to be placed in team_game table
 #player_data holds the red wings player statistics current season statistics
@@ -76,7 +76,7 @@ c = conn.cursor()
 # if not (os.path.isfile("./schedule.db")):
 c.execute('CREATE TABLE IF NOT EXISTS schedule(date TEXT, visitor TEXT, home TEXT, time TEXT, result TEXT, extra TEXT)')
 	#add information to the schedule database
-for list_ in schedule_data:
+for list_ in schedule_data :
 	c.execute('INSERT INTO schedule VALUES (?,?,?,?,?,?)', list_)
 
 	## add interface for replacing information and updating database whenever script is run.

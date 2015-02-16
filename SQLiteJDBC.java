@@ -57,7 +57,7 @@ public class SQLiteJDBC
 		System.out.println("Operation done succesfully");
 		return results;
 	}
-
+ 
 	public static void main( String args[] )
 	{
 		ArrayList<Integer> results = new ArrayList<Integer>(getResults());
