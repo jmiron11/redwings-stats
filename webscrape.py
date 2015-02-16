@@ -39,15 +39,18 @@ for list_ in data:
 			list_[index] = formatDate(ele)
 		elif index == 4: 								# set up the fourth index a
 			if ele != None and len(ele.split()) >= 6: 	# extend number of elements to 6 in each list
-				if "OT" in ele: 						# check for shootout, overtime, or neither
+				if ") OT" in ele: 						# check for shootout, overtime, or neither
 					list_[5] = "OT"
-				elif "SO" in ele:
+				elif ") SO" in ele:
 					list_[5] = "SO"
 				else:
 					list_[5] = "NONE"
 
 				score = re.findall(r'\d+', ele) 		# find the number score using regex
-				if (score[0] > score[1]):
+				if (len(score) != 2):
+					list_[4] = "NA"
+					list_[5] = "NONE"
+				elif (score[0] > score[1]):
 					list_[4] = "A" 						# store results as either home or away win
 				else:
 					list_[4] = "H"
