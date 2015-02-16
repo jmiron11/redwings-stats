@@ -1,3 +1,4 @@
+import os.path
 import sqlite3
 from datetime import datetime, date, time
 import re
@@ -34,28 +35,28 @@ for row in table.find_all("tr"):
 for list_ in data:
 	while len(list_) < 6:
 		list_.append(None)
-	for index, ele in enumerate(list_):
-		if index == 0:
+	for index, ele in enumerate(list_): 
+		if index == 0:									# the date is stored in index 0
 			list_[index] = formatDate(ele)
-		elif index == 4:
-			if ele != None and len(ele.split()) >= 6:
-				if "OT" in ele:
+		elif index == 4: 								# set up the fourth index a
+			if ele != None and len(ele.split()) >= 6: 	# extend number of elements to 6 in each list
+				if "OT" in ele: 						# check for shootout, overtime, or neither
 					list_[5] = "OT"
 				elif "SO" in ele:
 					list_[5] = "SO"
 				else:
 					list_[5] = "NONE"
 
-				score = re.findall(r'\d+', ele)
+				score = re.findall(r'\d+', ele) 		# find the number score using regex
 				if (score[0] > score[1]):
-					list_[4] = "A"
+					list_[4] = "A" 						# store results as either home or away win
 				else:
 					list_[4] = "H"
 			else:
 				list_[4] = "NA"
 				list_[5] = "NONE"
 
-conn = sqlite3.connect('schedule.db')
+conn = sqlite3.connect('schedule.db')  					# close the database
 c = conn.cursor()
 
 #create a table command
@@ -65,14 +66,16 @@ c = conn.cursor()
 # time will hold time in form "H:MM (PM/AM)" in ET
 # result will either hold H,A, or NA based on whether home/away has won, or NA if not played yet
 # extra will hold whether it went to extra time, "NONE" , "OT", "SO" for respective cases
-#c.execute('''CREATE TABLE schedule(date TEXT, visitor TEXT, home TEXT, time TEXT, result TEXT, extra TEXT)''')
 
-
-#add information to the schedule database
+# if not (os.path.isfile("./schedule.db")):
+c.execute('''CREATE TABLE schedule(date TEXT, visitor TEXT, home TEXT, time TEXT, result TEXT, extra TEXT)''')
+	#add information to the schedule database
 for list_ in data:
 	c.execute('INSERT INTO schedule VALUES (?,?,?,?,?,?)', list_)
 
-conn.commit()
+	## add interface for replacing information and updating database whenever script is run.
+
+conn.commit() 	# close the connection
 conn.close()
 
 

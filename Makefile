@@ -1,15 +1,16 @@
-CXX = clang++
-CXXFLAGS = -std=c++1y -stdlib=libc++ -g -O0 -Wall -Wextra -Werror -pedantic 
-LDFLAGS = -std=c++1y -stdlib=libc++ -lc++abi -l sqlite3
+JC = javac
+JFLAGS = -g	
 
-OBJS = test.o
+.SUFFIXES: .java .class
+.java.class:
+	$(JC) $(JFLAGS) $*.java
 
-redwings: $(OBJS)
-	$(CXX) $(LDFLAGS) $(OBJS) -o redwings
+CLASSES = \
+	SQLiteJDBC.java
 
-test.o:
-	$(CXX) $(CXXFLAGS) -c test.cpp
+default: classes
 
+classes: $(CLASSES:.java=.class)
 
 clean:
-	rm *.o redwings
+	$(RM) *.class
