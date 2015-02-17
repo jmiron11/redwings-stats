@@ -93,7 +93,7 @@ def playerGameData(soup):
 	address_list = address_list[1:]
 	address_list = [element.replace('recap', 'boxscore', 1) for element in address_list]
 		
-
+############### THIS IS NOT WORKING RIGHT NOW, ONLY PRINTS TEXT "DETROIT RED WINGS skaters" instead of subtree
 	table_data = []
 	# address_list now holds all addresses webscrape those webpages for player game data
 	only_red_wings = SoupStrainer(text='Detroit Red Wings skaters')
