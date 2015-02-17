@@ -75,6 +75,8 @@ def seasonPlayerData(soup):
 
 	return season_player_data
 
+# returns a list of lists that holds data from boxscores
+def boxScoreData(soup):
 
 
 def playerGameData(soup):
@@ -89,9 +91,11 @@ def playerGameData(soup):
 	# change recap to boxscore in each of the data_table elements
 	address_list = address_list[0]
 	for element in address_list:
-		element = element.replace("recap", "boxscore")
+		element = element.replace("recap", "boxscore") # THIS IS CURRENTLY NOT WORKING
 
-	# webscrape those webpages for player game data
-
+	# address_list now holds all addresses webscrape those webpages for player game data
+	for address in address_list:
+		address_soup = htmltoSoup(address)
+		address_data = # FUNCTION TO GET DATA FROM BOXSCORE
 
 	return #SOME JUNK
