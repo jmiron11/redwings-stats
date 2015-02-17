@@ -1,0 +1,21 @@
+NEEDS TO BE IMPLEMENTED:
+
+Create basic user interface in order to access database easily and calculate basic statistics
+
+Being able to access database fields for ease of access to calculate statistics
+
+Player stats this for this season and last season webscrape and creation
+table name: season_14_15_players, season_13_14_players
+	- Store in database table with id by name of players
+
+Webscrape box scores of games for player stats per game
+	- Store in database table id by date
+	- one table for each player
+
+
+DONE:
+	Webscrape schedule, game results
+	Database access for getting results and returning an ArrayList of those results.
+	Calculation of record and current points
+
+
