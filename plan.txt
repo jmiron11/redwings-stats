@@ -21,3 +21,9 @@ DONE:
 	Calculation of record and current points
 
 
+LINKS:
+	http://redwings.nhl.com/club/schedule.htm?season=20142015&gameType=2 - schedule and results
+	http://redwings.nhl.com/club/gamelog.htm - list of all games of season and game boxscore links within
+	http://redwings.nhl.com/gamecenter/en/boxscore?id=2014020825 - single game boxscore
+	http://redwings.nhl.com/club/stats.htm?season=20142015 - 14/15 season player stats
+	http://redwings.nhl.com/club/stats.htm?season=20132014 - 13/14 season player stats
