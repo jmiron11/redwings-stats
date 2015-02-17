@@ -1,7 +1,7 @@
 from datetime import datetime, date, time
 import re
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, SoupStrainer
 
 
 # formats the date, returns a string in form YYYY-MM-DD
@@ -70,13 +70,13 @@ def seasonPlayerData(soup):
 		cells = row.find_all("td")
 		cells = [element.text for element in cells]
 		if cells[0] != '#':
-			season_player_data.append([element for element in cells if element])
+			season_player_data.append([element for element in cells if element])	
 
 
 	return season_player_data
 
-# returns a list of lists that holds data from boxscores
-def boxScoreData(soup):
+# # returns a list of lists that holds data from boxscores
+# def boxScoreData(soup):
 
 
 def playerGameData(soup):
@@ -90,12 +90,20 @@ def playerGameData(soup):
 	
 	# change recap to boxscore in each of the data_table elements
 	address_list = address_list[0]
-	for element in address_list:
-		element = element.replace("recap", "boxscore") # THIS IS CURRENTLY NOT WORKING
+	address_list = address_list[1:]
+	address_list = [element.replace('recap', 'boxscore', 1) for element in address_list]
+		
 
+	table_data = []
 	# address_list now holds all addresses webscrape those webpages for player game data
-	for address in address_list:
-		address_soup = htmltoSoup(address)
-		address_data = # FUNCTION TO GET DATA FROM BOXSCORE
+	only_red_wings = SoupStrainer(text='Detroit Red Wings skaters')
+	# for address in address_list:
+	req = requests.get(address_list[0])
+	text = req.text
+	address_soup = BeautifulSoup(text, "html.parser", parse_only=only_red_wings)
+	print(address_soup.prettify())
 
-	return #SOME JUNK
+
+
+	# return a list of tables (list of lists)
+	return table_data

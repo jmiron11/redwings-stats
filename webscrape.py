@@ -20,8 +20,8 @@ player_game_data = soupExtract.playerGameData(player_game_soup)
 # team_game_data holds the red wings statistics per game to be placed in team_game table
 # player_data holds the red wings player statistics current season statistics
 
-for list_ in player_game_data:
-	print(list_)
+# for list_ in player_game_data:
+# 	print(list_)
 
 # conn = sqlite3.connect('redwings.db')  					# close the database
 # c = conn.cursor()
